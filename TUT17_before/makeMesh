@@ -1,0 +1,26 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # Run from this directory
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+runApplication Allclean
+m4 < system/blockMeshDict.m4 > system/blockMeshDict
+runApplication blockMesh
+runApplication snappyHexMesh -overwrite
+
+# Make the mesh 2D
+runApplication extrudeMesh
+
+# Clean up and rename mesh so it 
+runApplication renumberMesh -overwrite
+rm -rf 0
+
+runApplication createPatch -overwrite
+
+# Rescale Mesh to meters
+transformPoints -scale "(0.001 0.001 0.001)"
+
+# Copy the big boy 0 second folder to the run 0 second folder
+cp -r 0.orig 0
+#------------------------------------------------------------------------------

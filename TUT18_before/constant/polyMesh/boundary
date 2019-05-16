@@ -1,0 +1,91 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5.x                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+/*   Windows 32 and 64 bit porting by blueCAPE: http://www.bluecape.com.pt   *\
+|  Based on Windows porting (2.0.x v4) by Symscape: http://www.symscape.com   |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       polyBoundaryMesh;
+    location    "constant/polyMesh";
+    object      boundary;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+9
+(
+    inlet
+    {
+        type            patch;
+        nFaces          10;
+        startFace       20073;
+    }
+    outlet1
+    {
+        type            patch;
+        nFaces          20;
+        startFace       20083;
+    }
+    outlet2
+    {
+        type            patch;
+        nFaces          4;
+        startFace       20103;
+    }
+    dymWall
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          656;
+        startFace       20107;
+    }
+    AMI1
+    {
+        type            cyclicAMI;
+        inGroups        1(cyclicAMI);
+        nFaces          464;
+        startFace       20763;
+        matchTolerance  0.0001;
+        transform       noOrdering;
+        neighbourPatch  AMI2;
+    }
+    AMI2
+    {
+        type            cyclicAMI;
+        inGroups        1(cyclicAMI);
+        nFaces          468;
+        startFace       21227;
+        matchTolerance  0.0001;
+        transform       noOrdering;
+        neighbourPatch  AMI1;
+    }
+    front
+    {
+        type            empty;
+        inGroups        1(empty);
+        nFaces          10344;
+        startFace       21695;
+    }
+    back
+    {
+        type            empty;
+        inGroups        1(empty);
+        nFaces          10344;
+        startFace       32039;
+    }
+    walls
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          462;
+        startFace       42383;
+    }
+)
+
+// ************************************************************************* //
